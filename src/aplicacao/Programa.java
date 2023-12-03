@@ -24,6 +24,9 @@ public class Programa{
 				System.out.print("Source: ");
 				XadrezPosic source = UI.readXadrezPosic(tt);
 				
+				boolean[][] possibleMoves = partidaXadrez.possibleMoves(source);
+				UI.clearScreen();
+				UI.printTabua(partidaXadrez.getPecas(), possibleMoves);
 				System.out.println();
 				System.out.print("Target: ");
 				XadrezPosic target = UI.readXadrezPosic(tt);

@@ -13,6 +13,7 @@ public abstract class PartidaXadrez {
 	public PartidaXadrez() {
 		tabua = new Tabua(8, 8);
 		initialSetup();
+		
 	}
 	
 	public PecaXadrez[][] getPecas() {
@@ -23,6 +24,12 @@ public abstract class PartidaXadrez {
 	    	}
 	    }
 	    return mat;
+	}
+	
+	public boolean[][] possibleMoves(XadrezPosic source) {
+		Posicao posicao = source.toPosicao();
+		validateSourcePosicao(posicao);
+		return tabua.peca(posicao).possibleMoves();
 	}
 	
 	public PecaXadrez performXadrezMove(XadrezPosic sourcePosicao, XadrezPosic targetPosicao) {
@@ -52,7 +59,7 @@ public abstract class PartidaXadrez {
 	
 	private void validateTargetPosicao(Posicao source, Posicao target) {
 		if (tabua.peca(source).possibleMove(target)) {
-			throw new XadrezExc("A peça escolhida não se mover para a posição de destino");
+			throw new XadrezExc("Não existe uma peça na posição de origem");
 		}
 	}
 
