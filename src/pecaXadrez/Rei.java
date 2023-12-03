@@ -1,8 +1,8 @@
 package pecaXadrez;
 
 import tabuleiro.Tabua;
-import xadrez.Cor;
 import xadrez.PecaXadrez;
+import xadrez.Cor;
 
 public class Rei extends PecaXadrez {
 
