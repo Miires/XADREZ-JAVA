@@ -7,6 +7,9 @@ public class Tabua {
 	private Peca[][] pecas;
 	
 	public Tabua(int linhas, int colunas) {
+		if (linhas < 1 || colunas < 1) {
+			throw new TabuaExc("Erro ao criar o quadro: deve haver pelo menos 1 linha e 1 coluna");
+		}
 		this.linhas = linhas;
 		this.colunas = colunas;
 		pecas = new Peca[linhas][colunas];	
@@ -16,28 +19,45 @@ public class Tabua {
 		return colunas;
 	}
 
-	public void setColunas(int colunas) {
-		this.colunas = colunas;
-	}
-
 	public int getLinhas() {
 		return linhas;
 	}
 
-	public void setLinhas(int linhas) {
-		this.linhas = linhas;
-	}
-	
 	public Peca peca(int linha, int coluna) {
+		if (!posicaoExists(linha, coluna)) {
+			throw new TabuaExc("Não é possivel mexer no tabuleiro");
+		}
 		return pecas[linha][coluna];
 	}
 	
 	public Peca peca(Posicao posicao) {
+		if (!posicaoExists(posicao)) {
+			throw new TabuaExc("Não é possivel mexer no tabuleiro");
+		}
 		return pecas[posicao.getLinha()][posicao.getColuna()];
 	}
 	
 	public void placePeca(Peca peca, Posicao posicao) {
+		if (thereIsAPeca(posicao)) {
+			throw new TabuaExc("Já existe uma peça em posição " + posicao);
+		}
 		pecas[posicao.getLinha()][posicao.getColuna()] = peca;
 		peca.posicao = posicao;
 	} 
+
+	private boolean posicaoExists(int linha, int coluna) {
+		return linha >= 0 && linha < linhas && coluna >= 0 && coluna < colunas;	
+	}
+	
+	public boolean posicaoExists(Posicao posicao) {
+		return posicaoExists(posicao.getLinha(), posicao.getColuna());
+	}
+	
+	public boolean thereIsAPeca(Posicao posicao) {
+		if (!posicaoExists(posicao)) {
+			throw new TabuaExc ("Não é possivel mexer no tabuleiro");
+		}
+		return peca(posicao) != null;
+	}
 }
+
