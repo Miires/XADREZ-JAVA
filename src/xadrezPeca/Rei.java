@@ -1,4 +1,4 @@
-package pecaXadrez;
+package xadrezPeca;
 
 import tabuleiro.Tabua;
 import xadrez.PecaXadrez;
