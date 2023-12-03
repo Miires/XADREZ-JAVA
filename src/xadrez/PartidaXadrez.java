@@ -27,8 +27,18 @@ public class PartidaXadrez {
 		tabua.placePeca(peca, new XadrezPosic(coluna, linha).toPosicao());
 	}
 	private void initialSetup() {
-		placeNewPeca('b', 6, new Torre(tabua, Cor.WHITE));
-		placeNewPeca('e', 8, new Rei(tabua, Cor.BLACK));
-		placeNewPeca('e', 1, new Rei(tabua, Cor.WHITE));
+		placeNewPeca('c', 1, new Torre(tabua, Cor.WHITE));
+		placeNewPeca('c', 2, new Torre(tabua, Cor.WHITE));
+		placeNewPeca('d', 2, new Torre(tabua, Cor.WHITE));
+		placeNewPeca('e', 2, new Torre(tabua, Cor.WHITE));
+		placeNewPeca('e', 1, new Torre(tabua, Cor.WHITE));
+		placeNewPeca('d', 1, new Rei(tabua, Cor.WHITE));
+
+		placeNewPeca('c', 7, new Torre(tabua, Cor.BLACK));
+		placeNewPeca('c', 8, new Torre(tabua, Cor.BLACK));
+		placeNewPeca('d', 7, new Torre(tabua, Cor.BLACK));
+		placeNewPeca('e', 7, new Torre(tabua, Cor.BLACK));
+		placeNewPeca('e', 8, new Torre(tabua, Cor.BLACK));
+		placeNewPeca('d', 8, new Rei(tabua, Cor.BLACK));
 	}
 }	
