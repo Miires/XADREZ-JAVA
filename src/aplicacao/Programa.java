@@ -29,7 +29,7 @@ public class Programa{
 				UI.printTabua(partidaXadrez.getPecas(), possibleMoves);
 				System.out.println();
 				System.out.print("Target: ");
-				XadrezPosic target = UI.readXadrezPosic(tt);
+				XadrezPosic target = UI.readXadrezPosic(sc);
 				
 				PecaXadrez capturedXadrez = partidaXadrez.performXadrezMove(source, target);
 			}

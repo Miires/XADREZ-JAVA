@@ -8,7 +8,7 @@ import xadrez.PecaXadrez;
 import xadrez.XadrezPosic;
 
 public class UI {
-	
+
 	public static final String ANSI_RESET = "\u001B[0m";
 	public static final String ANSI_BLACK = "\u001B[30m";
 	public static final String ANSI_RED = "\u001B[31m";
@@ -27,31 +27,31 @@ public class UI {
 	public static final String ANSI_PURPLE_BACKGROUND = "\u001B[45m";
 	public static final String ANSI_CYAN_BACKGROUND = "\u001B[46m";
 	public static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
-	
+
 	public static void clearScreen() {
 		System.out.print("\033[H\033[2J");
 		System.out.flush();
 	}
-
-	public static XadrezPosic readXadrezPosic(Scanner tt) {
+	
+	public static XadrezPosic readChessPosicao(Scanner tt) {
 		try {
 			String s = tt.nextLine();
-			char coluna = s.charAt(0);
+			char colunan = s.charAt(0);
 			int linha = Integer.parseInt(s.substring(1));
-			return new XadrezPosic(coluna, linha);
+			return new XadrezPosic(colunan, linha);
 		}
 		catch (RuntimeException e) {
-			throw new InputMismatchException("Error lendo a posição de xadrez. Valores validos são de a1 até h8.");
+			throw new InputMismatchException("Erro na posição de xadrez. Valores validos são de A1 até H8");
 		}
 	}
-	
+
 	public static void printTabua(PecaXadrez[][] pecas) {
-		for (int i=0; i<pecas.length; i++) {
+		for (int i = 0; i < pecas.length; i++) {
 			System.out.print((8 - i) + " ");
-			for (int j=0; j<pecas.length; j++) {
-				printPeca(pecas[i][j]);
+			for (int j = 0; j < pecas.length; j++) {
+				printPeca(pecas[i][j], false);
 			}
-			System.out.println("🙂");
+			System.out.println();
 		}
 		System.out.println("  a b c d e f g h");
 	}
@@ -60,16 +60,16 @@ public class UI {
 		for (int i = 0; i < pecas.length; i++) {
 			System.out.print((8 - i) + " ");
 			for (int j = 0; j < pecas.length; j++) {
-				printPeca(pecas[i][j]);
+				printPeca(pecas[i][j], possibleMoves[i][j]);
 			}
-			System.out.println("🙂");
+			System.out.println();
 		}
 		System.out.println("  a b c d e f g h");
 	}
-	
+
 	private static void printPeca(PecaXadrez peca, boolean background) {
 		if (background) {
-			System.out.println(ANSI_BLUE_BACKGROUND);
+			System.out.print(ANSI_BLUE_BACKGROUND);
 		}
 		if (peca == null) {
 			System.out.print("-" + ANSI_RESET);
@@ -81,5 +81,10 @@ public class UI {
 			}
 		}
 		System.out.print(" ");
+	}
+
+	public static XadrezPosic readXadrezPosic(Scanner tt) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
