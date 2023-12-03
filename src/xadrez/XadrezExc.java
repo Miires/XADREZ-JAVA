@@ -1,6 +1,8 @@
 package xadrez;
 
-public class XadrezExc extends RuntimeException {
+import tabuleiro.TabuaExc;
+
+public class XadrezExc extends TabuaExc {
 	
 	private static final long serialVersionUID = 1L;
 

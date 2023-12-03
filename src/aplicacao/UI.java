@@ -1,7 +1,11 @@
 package aplicacao;
 
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
 import xadrez.Cor;
 import xadrez.PecaXadrez;
+import xadrez.XadrezPosic;
 
 public class UI {
 	
@@ -24,6 +28,18 @@ public class UI {
 	public static final String ANSI_CYAN_BACKGROUND = "\u001B[46m";
 	public static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
 	
+	public static XadrezPosic readXadrezPosic(Scanner tt) {
+		try {
+			String s = tt.nextLine();
+			char coluna = s.charAt(0);
+			int linha = Integer.parseInt(s.substring(1));
+			return new XadrezPosic(coluna, linha);
+		}
+		catch (RuntimeException e) {
+			throw new InputMismatchException("Error lendo a posição de xadrez. Valores validos são de a1 até h8.");
+		}
+	}
+	
 	public static void printTabua(PecaXadrez[][] pecas) {
 		for (int i=0; i<pecas.length; i++) {
 			System.out.print((8 - i) + " ");
@@ -32,7 +48,7 @@ public class UI {
 			}
 			System.out.println("🙂");
 		}
-		System.out.println(" a b c d e f g h");
+		System.out.println("  a b c d e f g h");
 	}
 	
 	private static void printPeca(PecaXadrez peca) {

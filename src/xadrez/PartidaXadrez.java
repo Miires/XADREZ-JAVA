@@ -1,5 +1,7 @@
 package xadrez;
 
+import tabuleiro.Peca;
+import tabuleiro.Posicao;
 import tabuleiro.Tabua;
 import xadrezPeca.Rei;
 import xadrezPeca.Torre;
@@ -15,17 +17,39 @@ public class PartidaXadrez {
 
 	public PecaXadrez[][] getPecas() {
 		PecaXadrez[][] mat = new PecaXadrez[tabua.getLinhas()][tabua.getColunas()];            
-	    for (int i=0; i<tabua.getLinhas(); i++) {
-	    	for (int j=0; j<tabua.getColunas(); j++) {	
+	    for (int i = 0; i < tabua.getLinhas(); i++) {
+	    	for (int j = 0; j < tabua.getColunas(); j++) {	
 	    		mat[i][j] = (PecaXadrez) tabua.peca(i,j);
 	    	}
 	    }
 	    return mat;
 	}
 	
-	private void placeNewPeca(char coluna, int linha, PecaXadrez peca) {
-		tabua.placePeca(peca, new XadrezPosic(coluna, linha).toPosicao());
+	public PecaXadrez performXadrezMove(XadrezPosic sourcePosicao, XadrezPosic targetPosicao) {
+		Posicao source = sourcePosicao.toPosicao();
+		Posicao target = targetPosicao.toPosicao();
+		validateSourcePosicao(source);
+		Peca capturedPeca = makeMove(source, target);
+		return (PecaXadrez)capturedPeca;
 	}
+	
+	private void placeNewPeca(char coluna, int linha, PecaXadrez peca) {
+	tabua.placePeca(peca, new XadrezPosic(coluna, linha).toPosicao());
+	
+	}
+	private Peca makeMove(Posicao source, Posicao target) {
+		Peca p = tabua.removePeca(source);
+		Peca capturedPeca = tabua.removePeca(target);
+		tabua.placePeca(p, target);
+		return capturedPeca;
+	}
+	
+	private void validateSourcePosicao(Posicao posicao) {
+		if (!tabua.thereIsAPeca(posicao)) {
+			throw new XadrezExc("Não existe peça na posição de origem");
+		}
+	}
+	
 	private void initialSetup() {
 		placeNewPeca('c', 1, new Torre(tabua, Cor.WHITE));
 		placeNewPeca('c', 2, new Torre(tabua, Cor.WHITE));
