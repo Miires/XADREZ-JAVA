@@ -39,14 +39,14 @@ public class Tabua {
 	
 	public void placePeca(Peca peca, Posicao posicao) {
 		if (thereIsAPeca(posicao)) {
-			throw new TabuaExc("Já existe uma peça em posição " + posicao);
+			throw new TabuaExc("Já existe uma peça na posição " + posicao);
 		}
 		pecas[posicao.getLinha()][posicao.getColuna()] = peca;
 		peca.posicao = posicao;
 	} 
 	public Peca removePeca(Posicao posicao) {
 		if (!posicaoExists(posicao)) {
-			throw new TabuaExc("Posição não tem no tabuleiro");
+			throw new TabuaExc("Essa peosição não tem no tabuleiro");
 		}
 		if (peca(posicao) == null) {
 			return null;

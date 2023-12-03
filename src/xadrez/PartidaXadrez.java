@@ -29,6 +29,7 @@ public abstract class PartidaXadrez {
 		Posicao source = sourcePosicao.toPosicao();
 		Posicao target = targetPosicao.toPosicao();
 		validateSourcePosicao(source);
+		validateTargetPosicao(source, target);
 		Peca capturedPeca = makeMove(source, target);
 		return (PecaXadrez)capturedPeca;
 	}
@@ -42,13 +43,19 @@ public abstract class PartidaXadrez {
 	
 	private void validateSourcePosicao(Posicao posicao) {
 		if (!tabua.thereIsAPeca(posicao)) {
-			throw new XadrezExc("Não existe uma peça na posição de origem");
+			throw new XadrezExc("A peça escolhida não se mover para a posição de destino");
 		}
 		if (!tabua.peca(posicao).isThereAnyPossibleMove()) {
-			throw new XadrezExc("Não existe movimento para a peça escolhida");	
+			throw new XadrezExc("A peça escolhida não se mover para a posição de destino");	
 		}
 	}
 	
+	private void validateTargetPosicao(Posicao source, Posicao target) {
+		if (tabua.peca(source).possibleMove(target)) {
+			throw new XadrezExc("A peça escolhida não se mover para a posição de destino");
+		}
+	}
+
 	private void placeNewPeca(char coluna, int linha, PecaXadrez peca) {
 				tabua.placePeca(peca, new XadrezPosic(coluna, linha).toPosicao());		
 	}
