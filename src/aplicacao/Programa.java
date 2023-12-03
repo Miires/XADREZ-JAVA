@@ -13,7 +13,8 @@ public class Programa{
 	public static void main(String[] args) {
 		
 		Scanner tt = new Scanner(System.in);
-		PartidaXadrez partidaXadrez = new PartidaXadrez();
+		PartidaXadrez partidaXadrez = new PartidaXadrez() {
+		};;
 		
 		while(true) {
 			try {
