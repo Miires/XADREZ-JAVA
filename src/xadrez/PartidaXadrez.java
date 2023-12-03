@@ -1,5 +1,7 @@
 package xadrez;
 
+import pecaXadrez.Torre;
+import tabuleiro.Posicao;
 import tabuleiro.Tabua;
 
 public class PartidaXadrez {
@@ -8,6 +10,7 @@ public class PartidaXadrez {
 	
 	public PartidaXadrez() {
 		tabua = new Tabua(8, 8);
+		initialSSetup();
 	}
 	
 	public static PecaXadrez[][] getPecas() {
@@ -20,4 +23,7 @@ public class PartidaXadrez {
 	    }
 	    return mat;
 	}	
+	private void initialSSetup() {
+		tabua.placePeca(new Torre(tabua, Cor.WHITE), new Posicao(2, 1));
+	}
 }
