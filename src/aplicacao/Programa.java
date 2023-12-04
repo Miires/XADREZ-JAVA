@@ -24,12 +24,12 @@ public class Programa{
 				System.out.print("Source: ");
 				XadrezPosic source = UI.readXadrezPosic(tt);
 				
-				boolean[][] possibleMoves = partidaXadrez.possibleMoves(source);
+				boolean[][] possibleMoves = artidaXadrez.possibleMoves(source);
 				UI.clearScreen();
 				UI.printTabua(partidaXadrez.getPecas(), possibleMoves);
 				System.out.println();
 				System.out.print("Target: ");
-				XadrezPosic target = UI.readXadrezPosic(sc);
+				XadrezPosic target = UI.readXadrezPosic(tt);
 				
 				PecaXadrez capturedXadrez = partidaXadrez.performXadrezMove(source, target);
 			}

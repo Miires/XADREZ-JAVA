@@ -26,8 +26,8 @@ public abstract class PartidaXadrez {
 	    return mat;
 	}
 	
-	public boolean[][] possibleMoves(XadrezPosic source) {
-		Posicao posicao = source.toPosicao();
+	public boolean[][] possibleMoves(XadrezPosic sourcePosicao) {
+		Posicao posicao = sourcePosicao.toPosicao();
 		validateSourcePosicao(posicao);
 		return tabua.peca(posicao).possibleMoves();
 	}
