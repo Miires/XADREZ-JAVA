@@ -1,8 +1,11 @@
 package xadrez;
 
-import tabuleiro.Tabua;
+import java.util.ArrayList;
+import java.util.List;
+
 import tabuleiro.Peca;
 import tabuleiro.Posicao;
+import tabuleiro.Tabua;
 import xadrezPeca.Rei;
 import xadrezPeca.Torre;
 
@@ -12,6 +15,9 @@ public  class PartidaXadrez {
 	private Cor jogadorAtual;
 	private Tabua tabua;
 	
+	private List<Peca> PecasNoTabuleiro = new ArrayList<Peca>();
+	private List<Peca> PecasCapturadas = new ArrayList<Peca>();
+
 	public PartidaXadrez() {
 		tabua = new Tabua(8, 8);
 		vez = 1;
@@ -57,6 +63,11 @@ public  class PartidaXadrez {
 		Peca p = tabua.removePeca(source);
 		Peca capturedPeca = tabua.removePeca(target);
 		tabua.placePeca(p, target);
+		
+		if (PecasCapturadas != null) {
+			PecasNoTabuleiro.remove(PecasCapturadas);
+		}
+		
 		return capturedPeca;
 	}
 	
@@ -85,6 +96,7 @@ public  class PartidaXadrez {
 	
 	private void placeNewPeca(char coluna, int linha, PecaXadrez peca) {
 		tabua.placePeca(peca, new XadrezPosic(coluna, linha).toPosicao());		
+		PecasNoTabuleiro.add(peca);
 	}
 
 	private void initialSetup() {
