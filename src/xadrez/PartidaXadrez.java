@@ -1,12 +1,12 @@
 package xadrez;
 
+import tabuleiro.Tabua;
 import tabuleiro.Peca;
 import tabuleiro.Posicao;
-import tabuleiro.Tabua;
 import xadrezPeca.Rei;
 import xadrezPeca.Torre;
 
-public abstract class PartidaXadrez {
+public  class PartidaXadrez {
 	
 	private Tabua tabua;
 	
@@ -15,7 +15,6 @@ public abstract class PartidaXadrez {
 		initialSetup();
 		
 	}
-	
 	public PecaXadrez[][] getPecas() {
 		PecaXadrez[][] mat = new PecaXadrez[tabua.getLinhas()][tabua.getColunas()];            
 	    for (int i = 0; i < tabua.getLinhas(); i++) {
@@ -40,6 +39,9 @@ public abstract class PartidaXadrez {
 		Peca capturedPeca = makeMove(source, target);
 		return (PecaXadrez)capturedPeca;
 	}
+	private void placeNewPeca(char coluna, int linha, PecaXadrez peca) {
+		tabua.placePeca(peca, new XadrezPosic(coluna, linha).toPosicao());		
+	}
 	
 	private Peca makeMove(Posicao source, Posicao target) {
 		Peca p = tabua.removePeca(source);
@@ -50,21 +52,17 @@ public abstract class PartidaXadrez {
 	
 	private void validateSourcePosicao(Posicao posicao) {
 		if (!tabua.thereIsAPeca(posicao)) {
-			throw new XadrezExc("A peça escolhida não se mover para a posição de destino");
+			throw new XadrezExc("Não há nenhuma peça na posição de origem");
 		}
 		if (!tabua.peca(posicao).isThereAnyPossibleMove()) {
-			throw new XadrezExc("A peça escolhida não se mover para a posição de destino");	
+			throw new XadrezExc("Não há movimentos possíveis para a peça escolhida");	
 		}
 	}
 	
 	private void validateTargetPosicao(Posicao source, Posicao target) {
-		if (tabua.peca(source).possibleMove(target)) {
-			throw new XadrezExc("Não existe uma peça na posição de origem");
+		if (!tabua.peca(source).possibleMove(target)) {
+			throw new XadrezExc("A peça escolhida não pode se mover para a posição alvo");
 		}
-	}
-
-	private void placeNewPeca(char coluna, int linha, PecaXadrez peca) {
-				tabua.placePeca(peca, new XadrezPosic(coluna, linha).toPosicao());		
 	}
 	
 	private void initialSetup() {

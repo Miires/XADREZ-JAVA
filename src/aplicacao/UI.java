@@ -3,9 +3,9 @@ package aplicacao;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-import xadrez.Cor;
 import xadrez.PecaXadrez;
 import xadrez.XadrezPosic;
+import xadrez.Cor;
 
 public class UI {
 
@@ -33,12 +33,12 @@ public class UI {
 		System.out.flush();
 	}
 	
-	public static XadrezPosic readChessPosicao(Scanner tt) {
+	public static XadrezPosic readXadrezPosicao(Scanner tt) {
 		try {
 			String s = tt.nextLine();
-			char colunan = s.charAt(0);
+			char coluna = s.charAt(0);
 			int linha = Integer.parseInt(s.substring(1));
-			return new XadrezPosic(colunan, linha);
+			return new XadrezPosic(coluna, linha);
 		}
 		catch (RuntimeException e) {
 			throw new InputMismatchException("Erro na posição de xadrez. Valores validos são de A1 até H8");
@@ -49,7 +49,7 @@ public class UI {
 		for (int i = 0; i < pecas.length; i++) {
 			System.out.print((8 - i) + " ");
 			for (int j = 0; j < pecas.length; j++) {
-				printPeca(pecas[i][j], false);
+					printPeca(pecas[i][j], false);
 			}
 			System.out.println();
 		}
@@ -81,10 +81,5 @@ public class UI {
 			}
 		}
 		System.out.print(" ");
+		}
 	}
-
-	public static XadrezPosic readXadrezPosic(Scanner tt) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-}
