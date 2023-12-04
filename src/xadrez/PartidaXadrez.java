@@ -8,13 +8,25 @@ import xadrezPeca.Torre;
 
 public  class PartidaXadrez {
 	
+	private int vez;
+	private Cor jogadorAtual;
 	private Tabua tabua;
 	
 	public PartidaXadrez() {
 		tabua = new Tabua(8, 8);
+		vez = 1;
+		jogadorAtual = Cor.WHITE;
 		initialSetup();
-		
 	}
+	
+	public int getVez() {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+		return vez;
+	}
+	
+	public Cor getJogadorAtual () {
+		return jogadorAtual;
+	}
+	
 	public PecaXadrez[][] getPecas() {
 		PecaXadrez[][] mat = new PecaXadrez[tabua.getLinhas()][tabua.getColunas()];            
 	    for (int i = 0; i < tabua.getLinhas(); i++) {
@@ -37,10 +49,8 @@ public  class PartidaXadrez {
 		validateSourcePosicao(source);
 		validateTargetPosicao(source, target);
 		Peca capturedPeca = makeMove(source, target);
+		nextVez();
 		return (PecaXadrez)capturedPeca;
-	}
-	private void placeNewPeca(char coluna, int linha, PecaXadrez peca) {
-		tabua.placePeca(peca, new XadrezPosic(coluna, linha).toPosicao());		
 	}
 	
 	private Peca makeMove(Posicao source, Posicao target) {
@@ -54,6 +64,9 @@ public  class PartidaXadrez {
 		if (!tabua.thereIsAPeca(posicao)) {
 			throw new XadrezExc("Não há nenhuma peça na posição de origem");
 		}
+		if (jogadorAtual != ((PecaXadrez)tabua.peca(posicao)).getCor()) {
+			throw new XadrezExc("a peça esscolhida não é sua");
+		}
 		if (!tabua.peca(posicao).isThereAnyPossibleMove()) {
 			throw new XadrezExc("Não há movimentos possíveis para a peça escolhida");	
 		}
@@ -65,6 +78,15 @@ public  class PartidaXadrez {
 		}
 	}
 	
+	private void nextVez() {
+		vez++;
+		jogadorAtual = (jogadorAtual == Cor.WHITE) ? Cor.BLACK : Cor.WHITE;
+	}
+	
+	private void placeNewPeca(char coluna, int linha, PecaXadrez peca) {
+		tabua.placePeca(peca, new XadrezPosic(coluna, linha).toPosicao());		
+	}
+
 	private void initialSetup() {
 		placeNewPeca('c', 1, new Torre(tabua, Cor.WHITE));
 		placeNewPeca('c', 2, new Torre(tabua, Cor.WHITE));

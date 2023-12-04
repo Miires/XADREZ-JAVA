@@ -3,6 +3,7 @@ package aplicacao;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import xadrez.PartidaXadrez;
 import xadrez.PecaXadrez;
 import xadrez.XadrezPosic;
 import xadrez.Cor;
@@ -18,7 +19,9 @@ public class UI {
 	public static final String ANSI_PURPLE = "\u001B[35m";
 	public static final String ANSI_CYAN = "\u001B[36m";
 	public static final String ANSI_WHITE = "\u001B[37m";
-
+	
+	
+	
 	public static final String ANSI_BLACK_BACKGROUND = "\u001B[40m";
 	public static final String ANSI_RED_BACKGROUND = "\u001B[41m";
 	public static final String ANSI_GREEN_BACKGROUND = "\u001B[42m";
@@ -43,6 +46,13 @@ public class UI {
 		catch (RuntimeException e) {
 			throw new InputMismatchException("Erro na posição de xadrez. Valores validos são de A1 até H8");
 		}
+	}
+	
+	public static void printMatch(PartidaXadrez partidaXadrez) {
+		printTabua(partidaXadrez.getPecas());
+		System.out.println();
+		System.out.println("Turn: " + partidaXadrez.getVez());
+		System.out.println("Waiting player: " + partidaXadrez.getJogadorAtual());
 	}
 
 	public static void printTabua(PecaXadrez[][] pecas) {

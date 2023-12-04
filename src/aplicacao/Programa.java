@@ -18,7 +18,7 @@ public class Programa {
 			while(true) {
 					try {
 						UI.clearScreen();
-						UI.printTabua(partidaXadrez.getPecas());
+						UI.printMatch(partidaXadrez);
 						System.out.println();
 						System.out.print("Source: ");
 						XadrezPosic source = UI.readXadrezPosicao(tt);
