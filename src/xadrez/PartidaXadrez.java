@@ -4,11 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import tabuleiro.Tabua;
 import tabuleiro.Peca;
 import tabuleiro.Posicao;
-import tabuleiro.Tabua;
-import xadrezPeca.Peao;
+import xadrezPeca.Bispo;
 import xadrezPeca.Rei;
+import xadrezPeca.Peao;
 import xadrezPeca.Torre;
 
 public  class PartidaXadrez {
@@ -19,8 +20,8 @@ public  class PartidaXadrez {
 	private boolean check;
 	private boolean checkMate;
 	
-	private List<Peca> PecasNoTabuleiro = new ArrayList<Peca>();
-	private List<Peca> capturedPecas = new ArrayList<Peca>();
+	private List<Peca> PecasNoTabuleiro = new ArrayList<>();
+	private List<Peca> capturedPecas = new ArrayList<>();
 
 	public PartidaXadrez() {
 		tabua = new Tabua(8, 8);
@@ -47,8 +48,8 @@ public  class PartidaXadrez {
 	
 	public PecaXadrez[][] getPecas() {
 		PecaXadrez[][] mat = new PecaXadrez[tabua.getLinhas()][tabua.getColunas()];            
-	    for (int i = 0; i < tabua.getLinhas(); i++) {
-	    	for (int j = 0; j < tabua.getColunas(); j++) {	
+	    for (int i=0; i<tabua.getLinhas(); i++) {
+	    	for (int j=0; j<tabua.getColunas(); j++) {	
 	    		mat[i][j] = (PecaXadrez) tabua.peca(i,j);
 	    	}
 	    }
@@ -92,8 +93,8 @@ public  class PartidaXadrez {
 		tabua.placePeca(p, target);
 		
 		if (capturedPeca != null) {
-			PecasNoTabuleiro.remove(capturedPeca);
-			capturedPecas.add(capturedPeca);
+				PecasNoTabuleiro.remove(capturedPeca);
+				capturedPecas.add(capturedPeca);
 		}
 		
 		return capturedPeca;
@@ -101,7 +102,7 @@ public  class PartidaXadrez {
 	
 	private void undoMove(Posicao source, Posicao target, Peca capturedPeca) {
 		PecaXadrez p = (PecaXadrez)tabua.removePeca(target);
-		p.decreaseMoveCount(); p = (PecaXadrez)tabua.removePeca(target);
+		p.decreaseMoveCount();
 		tabua.placePeca(p, source);
 
 		if (capturedPeca != null) {
@@ -116,7 +117,7 @@ public  class PartidaXadrez {
 			throw new XadrezExc("Não há nenhuma peça na posição de origem");
 		}
 		if (jogadorAtual != ((PecaXadrez)tabua.peca(posicao)).getCor()) {
-			throw new XadrezExc("a peça esscolhida não é sua");
+			throw new XadrezExc("A peça esscolhida não é sua");
 		}
 		if (!tabua.peca(posicao).isThereAnyPossibleMove()) {
 			throw new XadrezExc("Não há movimentos possíveis para a peça escolhida");	
@@ -128,7 +129,7 @@ public  class PartidaXadrez {
 			throw new XadrezExc("A peça escolhida não pode se mover para a posição alvo");
 		}
 	}
-	
+
 	private void nextVez() {
 		vez++;
 		jogadorAtual = (jogadorAtual == Cor.WHITE) ? Cor.BLACK : Cor.WHITE;
@@ -192,7 +193,9 @@ public  class PartidaXadrez {
 	private void initialSetup() {
  
         placeNewPeca('a', 1, new Torre(tabua, Cor.WHITE));
+        placeNewPeca('c', 1, new Bispo(tabua, Cor.WHITE));
         placeNewPeca('e', 1, new Rei(tabua, Cor.WHITE));
+        placeNewPeca('f', 1, new Bispo(tabua, Cor.WHITE));
         placeNewPeca('h', 1, new Torre(tabua, Cor.WHITE));
         placeNewPeca('a', 2, new Peao(tabua, Cor.WHITE));
         placeNewPeca('b', 2, new Peao(tabua, Cor.WHITE));
@@ -204,7 +207,9 @@ public  class PartidaXadrez {
         placeNewPeca('h', 2, new Peao(tabua, Cor.WHITE));
 
         placeNewPeca('a', 8, new Torre(tabua, Cor.BLACK));
+        placeNewPeca('c', 8, new Bispo(tabua, Cor.BLACK));
         placeNewPeca('e', 8, new Rei(tabua, Cor.BLACK));
+        placeNewPeca('f', 8, new Bispo(tabua, Cor.BLACK));
         placeNewPeca('h', 8, new Torre(tabua, Cor.BLACK));
         placeNewPeca('a', 7, new Peao(tabua, Cor.BLACK));
         placeNewPeca('b', 7, new Peao(tabua, Cor.BLACK));
@@ -215,10 +220,5 @@ public  class PartidaXadrez {
         placeNewPeca('g', 7, new Peao(tabua, Cor.BLACK));
         placeNewPeca('h', 7, new Peao(tabua, Cor.BLACK));
 
-		
-	}
-
-	public String toString() {
-		return "P";
 	}
 }	

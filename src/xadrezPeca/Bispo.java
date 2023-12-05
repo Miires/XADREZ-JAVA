@@ -5,15 +5,15 @@ import tabuleiro.Posicao;
 import xadrez.PecaXadrez;
 import xadrez.Cor;
 
-public class Torre extends PecaXadrez {
+public class Bispo extends PecaXadrez {
 
-	public Torre(Tabua tabua, Cor cor) {
+	public Bispo(Tabua tabua, Cor cor) {
 		super(tabua, cor);
 	}
 
 	@Override
 	public String toString() {
-		return "T";
+		return "B";
 	}
 	
     @Override
@@ -22,41 +22,41 @@ public class Torre extends PecaXadrez {
 			
 		Posicao p = new Posicao(0, 0);
 		
-		// acima
-		p.setValues(posicao.getLinha() - 1, posicao.getColuna());
+		// noroeste
+		p.setValues(posicao.getLinha() - 1, posicao.getColuna() -1);
 		while (getTabua().posicaoExists(p) && !getTabua().thereIsAPeca(p)) {
 			mat[p.getLinha()][p.getColuna()] = true;
-			p.setLinha(p.getLinha() - 1);
-		}
-		if (getTabua().posicaoExists(p) && isThereOpponentPeca(p)) {
-			mat[p.getLinha()][p.getColuna()] = true;
-		}
-
-		// esquerda
-		p.setValues(posicao.getLinha(), posicao.getColuna() - 1);
-		while (getTabua().posicaoExists(p) && !getTabua().thereIsAPeca(p)) {
-			mat[p.getLinha()][p.getColuna()] = true;
-			p.setColuna(p.getColuna(), - 1);
+			p.setValues(p.getLinha() - 1, p.getColuna() -1);
 		}
 		if (getTabua().posicaoExists(p) && isThereOpponentPeca(p)) {
 			mat[p.getLinha()][p.getColuna()] = true;
 		}
 		
-		// direita
-		p.setValues(posicao.getLinha(), posicao.getColuna() + 1);
+		// nordeste
+		p.setValues(posicao.getLinha() - 1, posicao.getColuna() + 1);
 		while (getTabua().posicaoExists(p) && !getTabua().thereIsAPeca(p)) {
 			mat[p.getLinha()][p.getColuna()] = true;
-			p.setColuna(p.getColuna(), + 1);
+			p.setValues(p.getLinha() - 1, p.getColuna() + 1);
 		}
 		if (getTabua().posicaoExists(p) && isThereOpponentPeca(p)) {
 			mat[p.getLinha()][p.getColuna()] = true;
 		}
 		
-		// abaixo
+		// sudeste
+		p.setValues(posicao.getLinha() + 1, posicao.getColuna() - 1);
+		while (getTabua().posicaoExists(p) && !getTabua().thereIsAPeca(p)) {
+			mat[p.getLinha()][p.getColuna()] = true;
+			p.setValues(p.getLinha() + 1, p.getColuna() + 1);
+		}
+		if (getTabua().posicaoExists(p) && isThereOpponentPeca(p)) {
+			mat[p.getLinha()][p.getColuna()] = true;
+		}
+		
+		// sudoeste
 		p.setValues(posicao.getLinha() + 1, posicao.getColuna());
 		while (getTabua().posicaoExists(p) && !getTabua().thereIsAPeca(p)) {
 			mat[p.getLinha()][p.getColuna()] = true;
-			p.setLinha(p.getLinha() + 1);
+			p.setValues(p.getLinha() + 1, p.getColuna() - 1);
 		}
 		if (getTabua().posicaoExists(p) && isThereOpponentPeca(p)) {
 			mat[p.getLinha()][p.getColuna()] = true;
