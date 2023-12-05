@@ -214,11 +214,11 @@ public  class PartidaXadrez {
         placeNewPeca('f', 7, new Peao(tabua, Cor.BLACK));
         placeNewPeca('g', 7, new Peao(tabua, Cor.BLACK));
         placeNewPeca('h', 7, new Peao(tabua, Cor.BLACK));
-	
+
+		
 	}
 
-	private void placeNewPeca(char coluna, int linha, Peao peao) {
-		// TODO Auto-generated method stub
-		
+	public String toString() {
+		return "P";
 	}
 }	
