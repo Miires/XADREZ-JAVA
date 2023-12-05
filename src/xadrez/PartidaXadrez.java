@@ -4,12 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import tabuleiro.Tabua;
 import tabuleiro.Peca;
 import tabuleiro.Posicao;
+import tabuleiro.Tabua;
 import xadrezPeca.Bispo;
-import xadrezPeca.Rei;
+import xadrezPeca.Cavalo;
 import xadrezPeca.Peao;
+import xadrezPeca.Rei;
 import xadrezPeca.Torre;
 
 public  class PartidaXadrez {
@@ -190,12 +191,13 @@ public  class PartidaXadrez {
 		PecasNoTabuleiro.add(peca);
 	}
 
-	private void initialSetup() {
- 
+		private void initialSetup() {
         placeNewPeca('a', 1, new Torre(tabua, Cor.WHITE));
+        placeNewPeca('b', 1, new Cavalo(tabua, Cor.WHITE));
         placeNewPeca('c', 1, new Bispo(tabua, Cor.WHITE));
         placeNewPeca('e', 1, new Rei(tabua, Cor.WHITE));
         placeNewPeca('f', 1, new Bispo(tabua, Cor.WHITE));
+        placeNewPeca('g', 1, new Cavalo(tabua, Cor.WHITE));
         placeNewPeca('h', 1, new Torre(tabua, Cor.WHITE));
         placeNewPeca('a', 2, new Peao(tabua, Cor.WHITE));
         placeNewPeca('b', 2, new Peao(tabua, Cor.WHITE));
@@ -206,10 +208,12 @@ public  class PartidaXadrez {
         placeNewPeca('g', 2, new Peao(tabua, Cor.WHITE));
         placeNewPeca('h', 2, new Peao(tabua, Cor.WHITE));
 
-        placeNewPeca('a', 8, new Torre(tabua, Cor.BLACK));
+        placeNewPeca('a', 8, new Cavalo(tabua, Cor.BLACK));
+        placeNewPeca('b', 8, new Torre(tabua, Cor.BLACK));
         placeNewPeca('c', 8, new Bispo(tabua, Cor.BLACK));
         placeNewPeca('e', 8, new Rei(tabua, Cor.BLACK));
         placeNewPeca('f', 8, new Bispo(tabua, Cor.BLACK));
+        placeNewPeca('g', 8, new Torre(tabua, Cor.BLACK));
         placeNewPeca('h', 8, new Torre(tabua, Cor.BLACK));
         placeNewPeca('a', 7, new Peao(tabua, Cor.BLACK));
         placeNewPeca('b', 7, new Peao(tabua, Cor.BLACK));
