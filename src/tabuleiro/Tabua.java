@@ -25,14 +25,14 @@ public class Tabua {
 
 	public Peca peca(int linha, int coluna) {
 		if (!posicaoExists(linha, coluna)) {
-			throw new TabuaExc("Não é possivel mexer no tabuleiro");
+			throw new TabuaExc("Essa peosição não tem no tabuleiro");
 		}
 		return pecas[linha][coluna];
 	}
 	
 	public Peca peca(Posicao posicao) {
 		if (!posicaoExists(posicao)) {
-			throw new TabuaExc("Não é possivel mexer no tabuleiro");
+			throw new TabuaExc("Essa peosição não tem no tabuleiro");
 		}
 		return pecas[posicao.getLinha()][posicao.getColuna()];
 	}
@@ -67,9 +67,8 @@ public class Tabua {
 	
 	public boolean thereIsAPeca(Posicao posicao) {
 		if (!posicaoExists(posicao)) {
-			throw new TabuaExc ("Não é possivel mexer no tabuleiro");
+			throw new TabuaExc ("Essa peosição não tem no tabuleiro");
 		}
 		return peca(posicao) != null;
 	}
 }
-

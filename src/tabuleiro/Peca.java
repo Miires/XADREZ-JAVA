@@ -13,6 +13,7 @@ public abstract class Peca {
 	protected Tabua getTabua() {
 		return tabua;
 	}
+	
 	public abstract boolean[][] possibleMoves();
 	
 	public boolean possibleMove(Posicao posicao) {

@@ -61,6 +61,7 @@ public class Rainha extends PecaXadrez {
 		if (getTabua().posicaoExists(p) && isThereOpponentPeca(p)) {
 			mat[p.getLinha()][p.getColuna()] = true;
 		}
+		
 		// noroeste
 				p.setValues(posicao.getLinha() - 1, posicao.getColuna() -1);
 				while (getTabua().posicaoExists(p) && !getTabua().thereIsAPeca(p)) {
