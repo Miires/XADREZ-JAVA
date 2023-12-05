@@ -85,7 +85,8 @@ public  class PartidaXadrez {
 	}
 	
 	private Peca makeMove(Posicao source, Posicao target) {
-		Peca p = tabua.removePeca(source);
+		PecaXadrez p = (PecaXadrez)tabua.removePeca(source);
+		p.increaseMoveCount();
 		Peca capturedPeca = tabua.removePeca(target);
 		tabua.placePeca(p, target);
 		
@@ -98,7 +99,8 @@ public  class PartidaXadrez {
 	}
 	
 	private void undoMove(Posicao source, Posicao target, Peca capturedPeca) {
-		Peca p = tabua.removePeca(target);
+		PecaXadrez p = (PecaXadrez)tabua.removePeca(target);
+		p.decreaseMoveCount(); p = (PecaXadrez)tabua.removePeca(target);
 		tabua.placePeca(p, source);
 
 		if (capturedPeca != null) {
@@ -187,18 +189,11 @@ public  class PartidaXadrez {
 	}
 
 	private void initialSetup() {
-	placeNewPeca('c', 1, new Torre(tabua, Cor.WHITE));
-	placeNewPeca('c', 2, new Torre(tabua, Cor.WHITE));
-	placeNewPeca('d', 2, new Torre(tabua, Cor.WHITE));
-	placeNewPeca('e', 2, new Torre(tabua, Cor.WHITE));
-	placeNewPeca('e', 1, new Torre(tabua, Cor.WHITE));
-	placeNewPeca('d', 1, new Rei(tabua, Cor.WHITE));
-
-	placeNewPeca('c', 7, new Torre(tabua, Cor.BLACK));
-	placeNewPeca('c', 8, new Torre(tabua, Cor.BLACK));
-	placeNewPeca('d', 7, new Torre(tabua, Cor.BLACK));
-	placeNewPeca('e', 7, new Torre(tabua, Cor.BLACK));
-	placeNewPeca('e', 8, new Torre(tabua, Cor.BLACK));
-	placeNewPeca('d', 8, new Rei(tabua, Cor.BLACK));
+		placeNewPeca('h', 7, new Torre(tabua, Cor.WHITE));
+        placeNewPeca('d', 1, new Torre(tabua, Cor.WHITE));
+        placeNewPeca('e', 1, new Rei(tabua, Cor.WHITE));
+        
+        placeNewPeca('b', 8, new Torre(tabua, Cor.BLACK));
+        placeNewPeca('a', 8, new Rei(tabua, Cor.BLACK));
 	}
 }	
