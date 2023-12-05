@@ -2,6 +2,7 @@ package xadrez;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import tabuleiro.Peca;
 import tabuleiro.Posicao;
@@ -14,9 +15,11 @@ public  class PartidaXadrez {
 	private int vez;
 	private Cor jogadorAtual;
 	private Tabua tabua;
+	private boolean check;
+	private boolean checkMate;
 	
 	private List<Peca> PecasNoTabuleiro = new ArrayList<Peca>();
-	private List<Peca> PecasCapturadas = new ArrayList<Peca>();
+	private List<Peca> capturedPecas = new ArrayList<Peca>();
 
 	public PartidaXadrez() {
 		tabua = new Tabua(8, 8);
@@ -31,6 +34,14 @@ public  class PartidaXadrez {
 	
 	public Cor getJogadorAtual () {
 		return jogadorAtual;
+	}
+	
+	public boolean getCheck() {
+		return check;
+	}
+	
+	public boolean getCheckMate() {
+		return checkMate;
 	}
 	
 	public PecaXadrez[][] getPecas() {
@@ -55,7 +66,21 @@ public  class PartidaXadrez {
 		validateSourcePosicao(source);
 		validateTargetPosicao(source, target);
 		Peca capturedPeca = makeMove(source, target);
-		nextVez();
+		
+		if (testCheck(jogadorAtual)) {
+			undoMove(source, target, capturedPeca);
+			throw new XadrezExc ("Voce nao pode se colocar em check");
+		}
+		
+		check = (testCheck(opponent(jogadorAtual))) ? true : false;
+		
+		if (testCheckMate(opponent(jogadorAtual))) {
+			checkMate = true;
+		}
+		else {
+			nextVez();
+		}
+		
 		return (PecaXadrez)capturedPeca;
 	}
 	
@@ -64,11 +89,23 @@ public  class PartidaXadrez {
 		Peca capturedPeca = tabua.removePeca(target);
 		tabua.placePeca(p, target);
 		
-		if (PecasCapturadas != null) {
-			PecasNoTabuleiro.remove(PecasCapturadas);
+		if (capturedPeca != null) {
+			PecasNoTabuleiro.remove(capturedPeca);
+			capturedPecas.add(capturedPeca);
 		}
 		
 		return capturedPeca;
+	}
+	
+	private void undoMove(Posicao source, Posicao target, Peca capturedPeca) {
+		Peca p = tabua.removePeca(target);
+		tabua.placePeca(p, source);
+
+		if (capturedPeca != null) {
+			tabua.placePeca(capturedPeca, target);
+			capturedPecas.remove(capturedPeca);
+			PecasNoTabuleiro.add(capturedPeca);
+		}
 	}
 	
 	private void validateSourcePosicao(Posicao posicao) {
@@ -94,24 +131,74 @@ public  class PartidaXadrez {
 		jogadorAtual = (jogadorAtual == Cor.WHITE) ? Cor.BLACK : Cor.WHITE;
 	}
 	
+	private Cor opponent(Cor cor) {
+	    return (cor == Cor.WHITE) ? Cor.BLACK : Cor.WHITE;
+	}
+
+	private PecaXadrez rei(Cor cor) {
+	    List<Peca> list = PecasNoTabuleiro.stream().filter(x -> ((PecaXadrez) x).getCor() == cor).collect(Collectors.toList());
+	    for (Peca p : list) {
+	        if (p instanceof Rei) {
+	            return (PecaXadrez) p;
+			}
+		}
+		throw new IllegalStateException("Não existe um rei da cor " + cor);
+	}
+	
+	private boolean testCheck(Cor cor) {
+		Posicao posicaoRei = rei(cor).getXadrezPosic().toPosicao();
+		List<Peca> opponentPecas = PecasNoTabuleiro.stream().filter(x -> ((PecaXadrez)x).getCor() == opponent(cor)).collect(Collectors.toList());
+		for (Peca p : opponentPecas) {
+			boolean[][] mat = p.possibleMoves();
+			if (mat[posicaoRei.getLinha()][posicaoRei.getColuna()]) {
+				return true; 
+			}
+		}
+		return false;
+	}
+		private boolean testCheckMate(Cor cor) {
+			if (!testCheck(cor)) {
+				return false;
+			}
+			List<Peca> list = PecasNoTabuleiro.stream().filter(x -> ((PecaXadrez)x).getCor() == cor).collect(Collectors.toList());
+			for (Peca p : list) {
+				boolean[][] mat = p.possibleMoves();
+				for (int i=0; i<tabua.getLinhas(); i++) {
+					for (int j=0; j<tabua.getColunas(); j++) {
+						if (mat[i][j]) {
+							Posicao source = ((PecaXadrez)p).getXadrezPosic().toPosicao();
+							Posicao target = new Posicao(i, j);
+							Peca capturedPeca = makeMove(source, target);
+							boolean testCheck = testCheck(cor);
+							undoMove(source, target, capturedPeca);
+							if (!testCheck) {
+								return false;
+							}
+						}
+					}
+				}
+			}
+			return true;
+		}	
+	
 	private void placeNewPeca(char coluna, int linha, PecaXadrez peca) {
 		tabua.placePeca(peca, new XadrezPosic(coluna, linha).toPosicao());		
 		PecasNoTabuleiro.add(peca);
 	}
 
 	private void initialSetup() {
-		placeNewPeca('c', 1, new Torre(tabua, Cor.WHITE));
-		placeNewPeca('c', 2, new Torre(tabua, Cor.WHITE));
-		placeNewPeca('d', 2, new Torre(tabua, Cor.WHITE));
-		placeNewPeca('e', 2, new Torre(tabua, Cor.WHITE));
-		placeNewPeca('e', 1, new Torre(tabua, Cor.WHITE));
-		placeNewPeca('d', 1, new Rei(tabua, Cor.WHITE));
+	placeNewPeca('c', 1, new Torre(tabua, Cor.WHITE));
+	placeNewPeca('c', 2, new Torre(tabua, Cor.WHITE));
+	placeNewPeca('d', 2, new Torre(tabua, Cor.WHITE));
+	placeNewPeca('e', 2, new Torre(tabua, Cor.WHITE));
+	placeNewPeca('e', 1, new Torre(tabua, Cor.WHITE));
+	placeNewPeca('d', 1, new Rei(tabua, Cor.WHITE));
 
-		placeNewPeca('c', 7, new Torre(tabua, Cor.BLACK));
-		placeNewPeca('c', 8, new Torre(tabua, Cor.BLACK));
-		placeNewPeca('d', 7, new Torre(tabua, Cor.BLACK));
-		placeNewPeca('e', 7, new Torre(tabua, Cor.BLACK));
-		placeNewPeca('e', 8, new Torre(tabua, Cor.BLACK));
-		placeNewPeca('d', 8, new Rei(tabua, Cor.BLACK));
+	placeNewPeca('c', 7, new Torre(tabua, Cor.BLACK));
+	placeNewPeca('c', 8, new Torre(tabua, Cor.BLACK));
+	placeNewPeca('d', 7, new Torre(tabua, Cor.BLACK));
+	placeNewPeca('e', 7, new Torre(tabua, Cor.BLACK));
+	placeNewPeca('e', 8, new Torre(tabua, Cor.BLACK));
+	placeNewPeca('d', 8, new Rei(tabua, Cor.BLACK));
 	}
 }	

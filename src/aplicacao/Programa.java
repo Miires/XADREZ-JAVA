@@ -38,8 +38,7 @@ public class Programa {
 						if (capturedPeca != null) {
 							captured.add(capturedPeca);
 						}
-				}
-				catch (XadrezExc e) {
+					} catch (XadrezExc e) {
 					System.out.println(e.getMessage());
 					tt.nextLine();
 				}
@@ -47,6 +46,8 @@ public class Programa {
 					System.out.println(e.getMessage());
 					tt.nextLine();
 				}
-			}
+			}		
+			//UI.clearScreen();
+			//UI.printMatch(partidaXadrez, captured);
 		} 
 	}

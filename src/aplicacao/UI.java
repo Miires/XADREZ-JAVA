@@ -12,6 +12,8 @@ import xadrez.XadrezPosic;
 import xadrez.Cor;
 
 public class UI {
+	
+	// https://stackoverflow.com/questions/5762491/how-to-print-color-in-console-using-system-out-println
 
 	public static final String ANSI_RESET = "\u001B[0m";
 	public static final String ANSI_BLACK = "\u001B[30m";
@@ -32,6 +34,7 @@ public class UI {
 	public static final String ANSI_CYAN_BACKGROUND = "\u001B[46m";
 	public static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
 
+	// https://stackoverflow.com/questions/2979383/java-clear-the-console
 	public static void clearScreen() {
 		System.out.print("\033[H\033[2J");
 		System.out.flush();
@@ -55,9 +58,18 @@ public class UI {
 		printCapturedPecas(captured);
 		System.out.println();
 		System.out.println("Vez: " + partidaXadrez.getVez());
-		System.out.println("Esperando jogador: " + partidaXadrez.getJogadorAtual());
+		if (!partidaXadrez.getCheckMate()) {
+			System.out.println("Esperando jogador: " + partidaXadrez.getJogadorAtual());
+			if (partidaXadrez.getCheck()) {
+				System.out.println("CHECK!");
+			}
+		}
+		else {
+			System.out.println("CHECKMATE!");
+			System.out.println("Vencedor: " + partidaXadrez.getJogadorAtual());
+		}
 	}
-
+	
 	public static void printTabua(PecaXadrez[][] pecas) {
 		for (int i = 0; i < pecas.length; i++) {
 			System.out.print((8 - i) + " ");
@@ -68,6 +80,7 @@ public class UI {
 		}
 		System.out.println("  a b c d e f g h");
 	}
+	
 	public static void printTabua(PecaXadrez[][] pecas, boolean[][] possibleMoves) {
 		for (int i = 0; i < pecas.length; i++) {
 			System.out.print((8 - i) + " ");
@@ -85,15 +98,14 @@ public class UI {
 		}
 		if (peca == null) {
 			System.out.print("-" + ANSI_RESET);
-		} 
-		else {
-			if (peca.getCor() == Cor.WHITE) {
+		} else {
+				if (peca.getCor() == Cor.WHITE) {
 				System.out.print(ANSI_WHITE + peca + ANSI_RESET);
-			} else {
+				} else {
 				System.out.print(ANSI_YELLOW + peca + ANSI_RESET);
+				}
 			}
-		}
-		System.out.print(" ");
+			System.out.print(" ");
 		}
 	
 		private static void printCapturedPecas(List<PecaXadrez> captured) {

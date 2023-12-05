@@ -22,7 +22,7 @@ public class Posicao {
 		return coluna;
 	}
 	
-	public void setColumn(int column, int coluna) {
+	public void setColuna(int column, int coluna) {
 		this.coluna = coluna;
 	}
 	
