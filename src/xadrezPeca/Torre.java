@@ -31,12 +31,12 @@ public class Torre extends PecaXadrez {
 		if (getTabua().posicaoExists(p) && isThereOpponentPeca(p)) {
 			mat[p.getLinha()][p.getColuna()] = true;
 		}
-		
+		int setColuna = -1;
 		// esquerda
 		p.setValues(posicao.getLinha(), posicao.getColuna() - 1);
 		while (getTabua().posicaoExists(p) && !getTabua().thereIsAPeca(p)) {
 			mat[p.getLinha()][p.getColuna()] = true;
-			p.setColuna(p.getColuna(), - 1);
+			p.setLinha(setColuna);
 		}
 		if (getTabua().posicaoExists(p) && isThereOpponentPeca(p)) {
 			mat[p.getLinha()][p.getColuna()] = true;

@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import tabuleiro.Peca;
 import tabuleiro.Posicao;
 import tabuleiro.Tabua;
+import xadrezPeca.Peao;
 import xadrezPeca.Rei;
 import xadrezPeca.Torre;
 
@@ -189,11 +190,35 @@ public  class PartidaXadrez {
 	}
 
 	private void initialSetup() {
-		placeNewPeca('h', 7, new Torre(tabua, Cor.WHITE));
-        placeNewPeca('d', 1, new Torre(tabua, Cor.WHITE));
+ 
+        placeNewPeca('a', 1, new Torre(tabua, Cor.WHITE));
         placeNewPeca('e', 1, new Rei(tabua, Cor.WHITE));
-        
-        placeNewPeca('b', 8, new Torre(tabua, Cor.BLACK));
-        placeNewPeca('a', 8, new Rei(tabua, Cor.BLACK));
+        placeNewPeca('h', 1, new Torre(tabua, Cor.WHITE));
+        placeNewPeca('a', 2, new Peao(tabua, Cor.WHITE));
+        placeNewPeca('b', 2, new Peao(tabua, Cor.WHITE));
+        placeNewPeca('c', 2, new Peao(tabua, Cor.WHITE));
+        placeNewPeca('d', 2, new Peao(tabua, Cor.WHITE));
+        placeNewPeca('e', 2, new Peao(tabua, Cor.WHITE));
+        placeNewPeca('f', 2, new Peao(tabua, Cor.WHITE));
+        placeNewPeca('g', 2, new Peao(tabua, Cor.WHITE));
+        placeNewPeca('h', 2, new Peao(tabua, Cor.WHITE));
+
+        placeNewPeca('a', 8, new Torre(tabua, Cor.BLACK));
+        placeNewPeca('e', 8, new Rei(tabua, Cor.BLACK));
+        placeNewPeca('h', 8, new Torre(tabua, Cor.BLACK));
+        placeNewPeca('a', 7, new Peao(tabua, Cor.BLACK));
+        placeNewPeca('b', 7, new Peao(tabua, Cor.BLACK));
+        placeNewPeca('c', 7, new Peao(tabua, Cor.BLACK));
+        placeNewPeca('d', 7, new Peao(tabua, Cor.BLACK));
+        placeNewPeca('e', 7, new Peao(tabua, Cor.BLACK));
+        placeNewPeca('f', 7, new Peao(tabua, Cor.BLACK));
+        placeNewPeca('g', 7, new Peao(tabua, Cor.BLACK));
+        placeNewPeca('h', 7, new Peao(tabua, Cor.BLACK));
+	
+	}
+
+	private void placeNewPeca(char coluna, int linha, Peao peao) {
+		// TODO Auto-generated method stub
+		
 	}
 }	
