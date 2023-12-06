@@ -12,7 +12,7 @@ public class Peao extends PecaXadrez {
 
 	public Peao(Tabua tabua, Cor cor, PartidaXadrez partidaXadrez) {
 		super(tabua, cor);
-		this.partidaXadrez = PartidaXadrez;
+		this.partidaXadrez = partidaXadrez;
 	}
 	
 	@Override
@@ -20,8 +20,7 @@ public class Peao extends PecaXadrez {
 		boolean[][] mat = new boolean[getTabua().getLinhas()][getTabua().getColunas()];
 		
 		Posicao p = new Posicao(0, 0);
-		
-		PartidaXadrez pecaXadrez;
+	
 		if (getCor() == Cor.WHITE) {
 			p.setValues(posicao.getLinha() - 1, posicao.getColuna());
 			if (getTabua().posicaoExists(p) && !getTabua().thereIsAPeca(p) ) {
@@ -44,11 +43,11 @@ public class Peao extends PecaXadrez {
 			// specialmove en passant white
 			if (posicao.getLinha() == 3) {
 				Posicao left = new Posicao(posicao.getLinha(), posicao.getColuna() - 1);
-				if (getTabua().posicaoExists(left) && isThereOpponentPeca(left) && getTabua().peca(left) == pecaXadrez.getEnPassantVulnerable()) {
+				if (getTabua().posicaoExists(left) && isThereOpponentPeca(left) && getTabua().peca(left) == partidaXadrez.getEnPassantVulnerable()) {
 					mat[left.getLinha() - 1][left.getColuna()] = true;
 				}
 				Posicao right = new Posicao(posicao.getLinha(), posicao.getColuna() - 1);
-				if (getTabua().posicaoExists(right) && isThereOpponentPeca(right) && getTabua().peca(right) == pecaXadrez.getEnPassantVulnerable()) {
+				if (getTabua().posicaoExists(right) && isThereOpponentPeca(right) && getTabua().peca(right) == partidaXadrez.getEnPassantVulnerable()) {
 					mat[right.getLinha() - 1][right.getColuna()] = true;
 				}
 			}
@@ -75,11 +74,11 @@ public class Peao extends PecaXadrez {
 				// specialmove en passant black
 				if (posicao.getLinha() == 4) {
 					Posicao left = new Posicao(posicao.getLinha(), posicao.getColuna() - 1);
-					if (getTabua().posicaoExists(left) && isThereOpponentPeca(left) && getTabua().peca(left) == pecaXadrez.getEnPassantVulnerable()) {
+					if (getTabua().posicaoExists(left) && isThereOpponentPeca(left) && getTabua().peca(left) == partidaXadrez.getEnPassantVulnerable()) {
 						mat[left.getLinha() + 1][left.getColuna()] = true;
 					}
 					Posicao right = new Posicao(posicao.getLinha(), posicao.getColuna() - 1);
-					if (getTabua().posicaoExists(right) && isThereOpponentPeca(right) && getTabua().peca(right) == pecaXadrez.getEnPassantVulnerable()) {
+					if (getTabua().posicaoExists(right) && isThereOpponentPeca(right) && getTabua().peca(right) == partidaXadrez.getEnPassantVulnerable()) {
 						mat[right.getLinha() + 1][right.getColuna()] = true;
 					}
 				}

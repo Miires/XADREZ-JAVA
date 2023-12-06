@@ -26,7 +26,7 @@ public class Rei extends PecaXadrez {
 	}
 	
 	private boolean testTorreCastling(Posicao posicao) {
-		PartidaXadrez p = (PartidaXadrez)getTabua().peca(posicao);
+		PecaXadrez p = (PecaXadrez)getTabua().peca(posicao);
 		return p != null && p instanceof Torre && p.getCor() == getCor() && p.getMoveCount() == 0;
 	}
 	

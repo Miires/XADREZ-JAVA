@@ -1,5 +1,7 @@
 package tabuleiro;
 
+import xadrez.PecaXadrez;
+
 public class Tabua {
 	
 	private int linhas;
@@ -70,5 +72,10 @@ public class Tabua {
 			throw new TabuaExc ("Essa peosição não tem no tabuleiro");
 		}
 		return peca(posicao) != null;
+	}
+
+	public PecaXadrez Peca(Posicao left) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

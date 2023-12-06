@@ -46,7 +46,7 @@ public class Programa {
 								System.out.print("Valor inválido! Insira peça para promoção (B/C/T/R): ");
 								type = tt.nextLine().toUpperCase();
 							}
-							partidaXadrez.replacePromotedPiece(type);
+							partidaXadrez.replacePromotedPeca(type);
 						}
 					} catch (XadrezExc e) {
 					System.out.println(e.getMessage());

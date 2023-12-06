@@ -21,8 +21,8 @@ public  class PartidaXadrez {
 	private Tabua tabua;
 	private boolean check;
 	private boolean checkMate;
-	private PartidaXadrez enPassantVulnerable;
-	private PartidaXadrez promoted;
+	private PecaXadrez enPassantVulnerable;
+	private PecaXadrez promoted;
 	
 	private List<Peca> PecasNoTabuleiro = new ArrayList<>();
 	private List<Peca> capturedPecas = new ArrayList<>();
@@ -50,12 +50,12 @@ public  class PartidaXadrez {
 		return checkMate;
 	}
 	
-	public PartidaXadrez getEnPassantVulnerable() {
+	public PecaXadrez getEnPassantVulnerable() {
 		return enPassantVulnerable;
 	}
 	
-	public PartidaXadrez getPromoted() {
-		return promoted;
+	public PecaXadrez getPromoted() {
+		return enPassantVulnerable;
 	}
 	
 	public PecaXadrez[][] getPecas() {
@@ -93,7 +93,7 @@ public  class PartidaXadrez {
 		if (movedPeca instanceof Peao) {
 			if ((movedPeca.getCor() == Cor.WHITE && target.getLinha() == 0) || (movedPeca.getCor() == Cor.BLACK && target.getLinha() == 7)) {
 				promoted = (PecaXadrez)tabua.peca(target);
-				promoted = replacePromotedPeca("R");
+				promoted = (PecaXadrez) replacePromotedPeca("R");
 			}
 		}
 		
@@ -118,7 +118,7 @@ public  class PartidaXadrez {
  	}
 	
 	
-	public PartidaXadrez replacePromotedPiece(String type) {
+	public Peca replacePromotedPeca(String type) {
 		if (promoted == null) {
 			throw new IllegalStateException("Não há nenhuma peça a ser promovida");
 		}
@@ -126,21 +126,22 @@ public  class PartidaXadrez {
 			return promoted;
 		}
 		
-		Posicao pos = promoted.getXadrezPosic().toPosition();
+		Posicao pos = promoted.getXadrezPosic().toPosicao();
 		Peca p = tabua.removePeca(pos);
 		PecasNoTabuleiro.remove(p);
 		
-		PartidaXadrez newPeca = newPeca(type, promoted.getCor());
+		Peca newPeca = newPeca(type, promoted.getCor());
 		tabua.placePeca(newPeca, pos);
 		PecasNoTabuleiro.add(newPeca);
 		
 		return newPeca;
 	}
 	
-	private PartidaXadrez newPiece(String type, Cor cor) {
+	private Peca newPeca(String type, Cor cor) {
 		if (type.equals("B")) return new Bispo(tabua, cor);
 		if (type.equals("C")) return new Cavalo(tabua, cor);
 		if (type.equals("R")) return new Rainha(tabua, cor);
+		
 		return new Torre(tabua, cor);
 	}
 	
@@ -351,6 +352,11 @@ private void placeNewPeca(char coluna, int linha, PecaXadrez peca) {
     placeNewPeca('g', 7, new Peao(tabua, Cor.BLACK, this));
     placeNewPeca('h', 7, new Peao(tabua, Cor.BLACK, this));
 
+	}
+
+	public int getMoveCount() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }	
